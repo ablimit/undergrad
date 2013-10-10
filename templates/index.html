@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<html lang="en">
+<head>
+	<title>Homepage</title>
+	<link href="/static/css/home.css" rel="stylesheet" media="screen">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet"> 
+	
+</head>
+
+<body>
+	
+	<div class="navbar navbar-fixed-top">
+		<div class = "navbar-inner">
+		<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+			<ul class = "nav">
+			<a class="brand" href="#">Interview</a>
+				<li class="text-center"><a href="http://127.0.0.1:8000/linkedinprofile">Profile</a></li>
+				<li class="text-center"><a href="#">Industry Info</a></li>
+				<li class="text-center"><a href="#">Jobs</a></li>
+				<li class="text-center"><a href="#">Campus Recruiting</a></li>
+				<li class="text-center"><a href=""><span class = "linkedin-import-button"><button class="btn btn-info">Linkedin Import</button></span></a></li>
+				<li class="text-center"><a href=""><span class = "resume-import-button"><button class="btn btn-success"><i class="icon-white icon-list-alt"></i> Resume Import</button></span></a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class = "interviewbar-background">
+	 <div class = "slogan">
+	  <h1>Interview</h1>
+	  <p>Use the bar below to start practicing for your dream career today</p>
+	 </div> 
+	 <div class = "interviewbar">		 
+	  <form action = "/interview1/" method = "GET">
+		 <select name="Field" class="btn">
+            <option value="Industry">Industry</option>
+			<option value="Finance">Finance</option>
+            <option value="Marketing">Marketing</option>
+          </select>
+		  <select name="Company" class="btn">
+            <option value="Company">Company</option>
+            <option value="Goldman Sachs">Goldman Sachs</option>
+            <option value="J.P Morgan">J.P. Morgan</option>
+            <option value="Citi">Citi</option>
+          </select>
+		  <select name="Position" class="btn">
+            <option value="Position">Position</option>
+            <option value="Summer Internship">Summer Internship</option>
+            <option value="Analyst">Analyst</option>
+          </select>
+            <span id = "interviewbutton"><input type="submit" class="btn btn-primary" value="Interview"/></span>	
+      </form>
+     </div>  
+    </div>
+ 
+    <div class = "container">
+ 
+	<div class="row-fluid">
+        <div class="span4">
+          <h2>Industry</h2>
+          <p>Pick an Industry that you are interested in</p>
+        </div>
+        <div class="span4">
+          <h2>Company</h2>
+          <p>Pick from a list of leading companies within that industry</p>
+       </div>
+        <div class="span4"> 
+          <h2>Position</h2>
+          <p>Pick the Position that you want to interview for</p>
+        </div>
+      </div> 
+ 
+    <div class = "tabinfo-background"> 
+	 <div class="tabinfo">
+		<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+			<li class="active"><a href="#Industries" data-toggle="tab">Industry Info</a></li>
+			<li><a href="#Jobs" data-toggle="tab">Jobs</a></li>
+			<li><a href="#CampusRecruiting" data-toggle="tab">Campus Recruiting</a></li>
+		</ul>
+		<div id="my-tab-content" class="tab-content">
+			<div class="tab-pane active" id="Industries">
+				<h1>Finance</h1>
+			</div>
+			<div class="tab-pane" id="Jobs">
+				<h1>Financial Analyst</h1>
+			</div>
+			<div class="tab-pane" id="CampusRecruiting">
+				<h1>Emory University</h1>
+			</div>
+		</div>
+	 </div> 
+	</div>
+	
+	</div>
+	
+	<!--JavaScript-->
+	<script type="text/javascript">
+		jQuery(document).ready(function ($) {
+			$('#tabs').tab();
+		});
+	</script>   
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+	<script type="text/javascript" src="/static/js/bootstrap-tab.js"></script>
+	<script type="text/javascript" src="/static/js/bootstrap.js"></script>
+	
+</body>
+</html>
+
