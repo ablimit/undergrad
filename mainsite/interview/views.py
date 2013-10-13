@@ -8,6 +8,7 @@ from django.core.context_processors import csrf
 
 from interview.models import Question
 from interview.models import Attempt
+from interview.models import User
 
 def genInterview(intv_field):
     return Question.objects.all()[0:5]
@@ -15,6 +16,7 @@ def genInterview(intv_field):
 single_round = []
 
 def getInterviewQuestion(request):
+    global single_round
     print request.method 
 
     if request.method == 'GET':
@@ -30,10 +32,11 @@ def getInterviewQuestion(request):
 	single_question['idx'] = 1
 	return render_to_response('question.html',single_question)	
     elif request.method == 'POST':
-
-	single_attempt = Attempt(session = 'xyz', response=request.POST['answer'])
-	single_attempt.user_id = 1
-	single_attempt.question_id = request.POST['qid'],
+	q = Question.objects.get(id=1)
+	u = User.objects.all()[0]
+	single_attempt = Attempt(user = u, question =q, session = 'xyz', response=request.POST['answer'])
+	# single_attempt.user_id = 1
+	# single_attempt.question_id = request.POST['qid'],
 	single_attempt.save()
 	
 	next_idx = int(request.POST['idx'])
