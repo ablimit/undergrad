@@ -1,0 +1,20 @@
+<html>
+    <head>
+	<title>Round {{idx}}</title>
+    </head>
+
+    <body>
+	<div id="showquestion">
+	    {{qtext}}
+	</div>
+	<form action="/nextround" method="post">{% csrf_token %}
+	    <textarea name="answer" cols="100" rows="20">
+		Enter your answers here...
+	    </textarea><br>
+	    <input id="nextbtn" type="submit" value="next" />
+	    <input type="hidden" name="qid" value="{{qid}}" />
+	    <input type="hidden" name="idx" value="{{idx}}"/>
+	</form>
+    </body>
+</html>
+

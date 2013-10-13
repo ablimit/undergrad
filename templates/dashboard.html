@@ -1,0 +1,15 @@
+<html>
+    <head><title>Dashboard</title></head>
+
+    <body>
+
+	<h1>Field: {{ Field }}</h1>
+	<h1>Level: {{ Level }}</h1>
+	<h2>Keywords: {{ Keywords }}</h1>
+	<form action="/start" method="get">
+	    <input type="submit" value="Start Interview">
+	    <input type="hidden" name="field" value="{{Field}}">
+	</form>
+    </body>
+</html>
+

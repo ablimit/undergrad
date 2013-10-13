@@ -23,7 +23,7 @@ class Attempt(models.Model):
     question = models.ForeignKey(Question)
     session = models.CharField(max_length=100)
     response = models.TextField()
-    attempt_date = models.DateField()
+    attempt_date = models.DateField(auto_now=True)
     
     def __unicode__(self):
 	return '\n'.join ((self.session,self.response))
