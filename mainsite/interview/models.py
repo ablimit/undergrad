@@ -28,3 +28,15 @@ class Attempt(models.Model):
     def __unicode__(self):
 	return '\n'.join ((self.session,self.response))
 
+class Jobs(models.Model):
+    id  = models.CharField(max_length=100,primary_key=True)
+    url = models.URLField(max_length =500,null=True)
+    description = models.TextField(null=True)
+    title = models.TextField(null=True)
+    company = models.CharField(max_length=100, null=True)
+    skills = models.TextField(null=True)
+    related_questions = models.TextField(null=True)
+    
+    def __unicode__(self):
+	return self.id
+
