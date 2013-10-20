@@ -19,12 +19,19 @@ def getJobs(application, count, keywords, start=0):
 
 def getJobById(application,job_id):
     if application != None and job_id !=None:
-	return application.get_job(selectors=['id', \
-		'customer-job-code',\
-		'active',\
-		'posting-date',\
-		'expiration-date',\
-		'company'], job_id)
+	return application.get_job(job_id = job_id, selectors=['id',
+		'customer-job-code',
+		'active',
+		'posting-date',
+		'expiration-date',
+		{'company': ['id', 'name']},
+		{'position': ['title', 'location', 'job-functions', 'industries', 'job-type', 'experience-level']},
+		'skills-and-experience',
+		'description',
+		'salary',
+		'referral-bonus',
+		'site-job-url',
+		'location-description'])
     return None
 
 
@@ -42,10 +49,9 @@ def getFileName(term='temp.txt',idx=''):
 def dumpjobsFromLocal(application=None, fn = None):
     dic = {}
     if fn != None:
-	data = json.load(open(fn))
+	data = json.load(open(fn,'r'))
 	if application != None:
-	    for item in data['jobs']['values']:
-		job_id = item['id']
+	    for job_id in data.keys():
 		print ' '.join(("job_id:", str(job_id)))
 		job = getJobById(application,job_id)
 		dic[job_id] = job
@@ -98,11 +104,9 @@ def dumpjobs(application=None):
 
 def main():
     app = authorize()
-    dumpjobs(app)
-
-    # items = jobs['jobs']['values']
+    # dumpjobs(app)
+    dumpjobsFromLocal(app,'dumps/jobs.json')
 
 if __name__ == '__main__':
     main()
-# print getJobs(application,20, 'Investment Banking')
 
