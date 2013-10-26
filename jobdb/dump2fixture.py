@@ -3,7 +3,7 @@
 import json
 import sys
 
-def dumpjobsFixture(fn = 'dumps/jobs.json', dumpname ='dumps/jobs.fixture.json'):
+def dumpjobsFixture(fn = 'dumps/entryLevelJobs.json', dumpname ='dumps/eljobs.fixture.json'):
     data = [] 
     if fn != None:
 	jobs = json.load(open(fn,'r'))

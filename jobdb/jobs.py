@@ -8,12 +8,13 @@ API_KEY = 'fnv6hgzvzb8o'
 API_SECRET = 'WeSpyxZaKm8dCnnF'
 RETURN_URL = 'http://127.0.0.1:8000/'
 
+docs = """http://api.linkedin.com/v1/job-search:(jobs:(id,customer-job-code,active,posting-date,expiration-date,posting-timestamp,expiration-timestamp,company:(id,name),position:(title,location,job-functions,industries,job-type,experience-level),skills-and-experience,description-snippet,description,salary,job-poster:(id,first-name,last-name,headline),referral-bonus,site-job-url,location-description))?distance=10&job-title=product&facets=company,location&facet=industry,6&facet=company,1288&sort=DA"""
 
 # retrivejobs by ID, the count should handled internally 
 def getJobs(application, count, keywords, start=0):
     if application != None and count > 0:
-	# return application.search_job(selectors=[{'jobs': ['id', 'customer-job-code', 'posting-date']}], params={'keywords': keywords, 'count': count })
-	return application.search_job(params={'keywords': keywords, 'count': count, 'start': start})
+	return application.search_job(selectors=[{'jobs': ['id', {'position': ['title','location','job-functions','industries','job-type','experience-level']}]}], params={'keywords': keywords, 'count': count })
+	# return application.search_job(params={'keywords': keywords, 'count': count, 'start': start})
     return None
 
 
@@ -62,50 +63,38 @@ def dumpjobsFromLocal(application=None, fn = None):
     print "done."
 
 def dumpjobs(application=None):
-    fn_coll = []
+    dic = {}
     # get job search data 
     for terms in ['Investment Banking Analyst', 'Financial Analyst', 'Accounting', 'Sales and Trading']:
 	if application != None:
 	    print ' '.join(("Desc:", terms))
-	    job_coll = getJobs(application,20,terms,0)
-	    fn = getFileName(terms,'0-19')
-	    fn_coll.append(fn)
-	    with open(fn,'w') as f:
-		json.dump(job_coll,f)
-	    
-	    job_coll = getJobs(application,20,terms,20)
-	    fn = getFileName(terms,'20-39')
-	    fn_coll.append(fn)
-	    with open(fn,'w') as f:
-		json.dump(job_coll,f)
-	    
-	    job_coll = getJobs(application,10,terms,40)
-	    fn = getFileName(terms,'40-49')
-	    fn_coll.append(fn)
-	    with open(fn,'w') as f:
-		json.dump(job_coll,f)
-    
-    dic = {}
-    for f in fn_coll:
-	data = json.load(open(f))
-	if application != None:
-	    for item in data['jobs']['values']:
-		job_id = item['id']
-		print ' '.join(("job_id:", str(job_id)))
-		job = getJobById(application,job_id)
-		dic[job_id] = job
-    # dump those jobs
-    with open('jobs.json','w') as f:
-	json.dump(dic,f)
+	    job_ids = []
+	    start_index = 0 
+	    while len(job_ids) <50:
+		jobs = getJobs(application,20,terms,start_index)
+		for job in jobs['jobs']['values']:
+		    el = int(job['position']['experienceLevel']['code'])
+		    # only retrieve entry or internship jobs
+		    if el < 3 and el > 0:
+			job_id = job['id']
+			job_ids.append(job_id)
+			jobinfo = getJobById(application,job_id)
+			dic[job_id] = jobinfo
+			print "EL job: %s, Dictionary size: %d" % (job_id, len(dic))
 
+		start_index +=20
+	    
+    
+    with open('entryLevelJobs.json','w') as f:
+		json.dump(dic,f)
     print "done."
 
 
 
 def main():
     app = authorize()
-    # dumpjobs(app)
-    dumpjobsFromLocal(app,'dumps/jobs.json')
+    dumpjobs(app)
+    # dumpjobsFromLocal(app,'dumps/jobs.json')
 
 if __name__ == '__main__':
     main()
